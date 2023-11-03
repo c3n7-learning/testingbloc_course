@@ -1,14 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:testingbloc_course/bloc/bloc_actions.dart';
-import 'package:testingbloc_course/bloc/person.dart';
 
 import 'dart:developer' as devtools show log;
-
-import 'package:testingbloc_course/bloc/persons_bloc.dart';
 
 extension Log on Object {
   void log() => devtools.log(toString());
@@ -22,24 +14,10 @@ void main() {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: BlocProvider(
-        create: (_) => PersonsBloc(),
-        child: const HomePage(),
-      ),
+      home: const HomePage(),
     ),
   );
 }
-
-extension Subscript<T> on Iterable<T> {
-  T? operator [](int index) => length > index ? elementAt(index) : null;
-}
-
-Future<Iterable<Person>> getPersons(String url) => HttpClient()
-    .getUrl(Uri.parse(url))
-    .then((req) => req.close())
-    .then((resp) => resp.transform(utf8.decoder).join())
-    .then((str) => json.decode(str) as List<dynamic>)
-    .then((list) => list.map((e) => Person.fromJson(e)));
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -50,58 +28,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Title'),
       ),
-      body: Column(
-        children: [
-          Row(
-            children: [
-              TextButton(
-                onPressed: () {
-                  context.read<PersonsBloc>().add(
-                        const LoadPersonsAction(
-                          url: persons1Url,
-                          loader: getPersons,
-                        ),
-                      );
-                },
-                child: const Text('Load json #1'),
-              ),
-              TextButton(
-                onPressed: () {
-                  context.read<PersonsBloc>().add(
-                        const LoadPersonsAction(
-                          url: persons2Url,
-                          loader: getPersons,
-                        ),
-                      );
-                },
-                child: const Text('Load json #2'),
-              )
-            ],
-          ),
-          BlocBuilder<PersonsBloc, FetchResult?>(
-            buildWhen: ((previous, current) =>
-                previous?.persons != current?.persons),
-            builder: (context, fetchResult) {
-              fetchResult?.log();
-              final persons = fetchResult?.persons;
-              if (persons == null) {
-                return const SizedBox();
-              }
-              return Expanded(
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    final person = persons[index]!;
-                    return ListTile(
-                      title: Text(person.name),
-                    );
-                  },
-                  itemCount: persons.length,
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+      body: const SizedBox(),
     );
   }
 }
