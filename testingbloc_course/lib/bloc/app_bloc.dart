@@ -8,11 +8,13 @@ import 'package:testingbloc_course/models.dart';
 class AppBloc extends Bloc<AppAction, AppState> {
   final LoginApiProtocol loginApi;
   final NotesApiProtocol notesApi;
+  final LoginHandle acceptedLoginHandle;
 
-  AppBloc({
-    required this.loginApi,
-    required this.notesApi,
-  }) : super(const AppState.empty()) {
+  AppBloc(
+      {required this.loginApi,
+      required this.notesApi,
+      required this.acceptedLoginHandle})
+      : super(const AppState.empty()) {
     on<LoginAction>(
       (event, emit) async {
         // start loading
@@ -55,7 +57,7 @@ class AppBloc extends Bloc<AppAction, AppState> {
 
       // fetch notes
       final loginHandle = state.loginHandle;
-      if (loginHandle != const LoginHandle.fooBar()) {
+      if (loginHandle != acceptedLoginHandle) {
         emit(
           AppState(
             isLoading: false,
