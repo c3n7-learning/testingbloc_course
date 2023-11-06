@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1044650482238",
+    "project_id": "bloc-photo-library-c3n7",
+    "storage_bucket": "bloc-photo-library-c3n7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044650482238:android:ce7d2ee619bdc6555a4f6f",
+        "android_client_info": {
+          "package_name": "tech.c3n7.testingbloc_course"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzEm4hsHMr6lwa-qoS9OUtfSdsyjbeBtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
